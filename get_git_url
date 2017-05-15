@@ -1,0 +1,13 @@
+#!/bin/bash
+
+args=("$@")
+
+region=${args[0]}
+stackname=${args[1]}
+
+git_clone_url_http=$(aws cloudformation describe-stacks \
+  --region "$region" \
+  --stack-name "$stackname" \
+  --output text \
+  --query 'Stacks[*].Outputs[?OutputKey==`GitCloneUrlHttp`].[OutputValue]')
+echo git_clone_url_http=$git_clone_url_http

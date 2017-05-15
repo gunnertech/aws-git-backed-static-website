@@ -1,0 +1,14 @@
+#!/bin/bash
+
+args=("$@")
+
+path=${args[0]}
+repository=${args[1]}
+git_clone_url_http=${args[2]}
+
+cd $path && git clone \
+  --config 'credential.helper=!aws codecommit credential-helper $@' \
+  --config 'credential.UseHttpPath=true' \
+  $git_clone_url_http
+
+cd $repository

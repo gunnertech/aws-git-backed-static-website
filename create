@@ -1,0 +1,22 @@
+#!/bin/bash
+
+args=("$@")
+
+domain=${args[0]}
+email=support@gunnertech.com
+
+template=aws-git-backed-static-website-cloudformation.yml
+stackname=${domain/./-}-$(date +%Y%m%d-%H%M%S)
+# region=${args[1]}
+region=us-east-1
+
+aws cloudformation create-stack \
+  --region "$region" \
+  --stack-name "$stackname" \
+  --capabilities CAPABILITY_IAM \
+  --template-body "file://$template" \
+  --tags "Key=Name,Value=$stackname" \
+  --parameters \
+    "ParameterKey=DomainName,ParameterValue=$domain" \
+    "ParameterKey=NotificationEmail,ParameterValue=$email"
+echo region=$region stackname=$stackname
