@@ -3,8 +3,8 @@
 args=("$@")
 
 domain=${args[0]}
-region=${args[1]}
-stackname=${args[2]}
+region='us-east-1'
+stackname=${args[1]}
 
 aws cloudformation delete-stack \
   --region "$region" \
